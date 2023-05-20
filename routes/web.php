@@ -16,3 +16,14 @@
 $router->get('/', function () use ($router) {
     return $router->app->version();
 });
+$router->get('/courses1','User1Controller@index');
+$router->post('/courses1', 'User1Controller@add');
+$router->get('/courses1/{course_id}', 'User1Controller@show'); // get user by id
+$router->put('/courses1/{course_id}','User1Controller@update'); // update user record
+$router->delete('/courses1/{course_id}', 'User1Controller@delete'); //delete record
+
+$router->get('/courses2','User2Controller@index');
+$router->post('/courses2', 'User2Controller@add');
+$router->get('/courses2/{course_id}', 'User2Controller@show'); // get user by id
+$router->put('/courses2/{course_id}','User2Controller@update'); // update user record
+$router->delete('/courses2/{course_id}', 'User2Controller@delete'); //delete record

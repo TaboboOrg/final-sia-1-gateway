@@ -5,130 +5,32 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Response;
 use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
-use App\Models\User;
+use App\Services\User2Service;
 
 Class User2Controller extends Controller {
     use ApiResponser;
-    private $request;
-    public function __construct(Request $request){
-        $this->request = $request;
-    }
-    public function getUsers(){
-        $users = User::all();
-        return response()->json($users, 200);
-    }
-    // public function show($course_id)
-    // {
-    //     $users = User::find($course_id);
-    //     return response()->json($users, 200);
-    // }
-    // public function update(Request $request, $course_id)
-    // {
-    //     $users = User::find($course_id);
-    //     $users->course_name = $request->input('course_name');
-    //     $users->save();
+    public $user2Service;
 
-    //     return response()->json($users, 200);
-    // }
-    // public function destroy($course_id)
-    // {
-    //     $users = User::find($course_id);
-    //     $product->delete();
-    //     return response()->json('Successfully Deleted');
-    // }
+    public function __construct(User2Service $user2Service){
+        $this->user2Service = $user2Service;
+    }
+
+    public function index(){
+        return $this->successResponse($this->user2Service->obtainUsers2());
+    }
+    
     public function add(Request $request){
-        $rules = [
-        'course_name' => 'required|max:100',
-        'course_description' => 'required|max:500'
-        ];
-        $this->validate($request,$rules);
-        $user = User::create($request->all());
-        return $this->successResponse($user, Response::HTTP_CREATED);
+        return $this->successResponse($this->user2Service->createUser2($request->all(),Response::HTTP_CREATED));
         }
-        /**
-        * Obtains and show one user
-        * @return Illuminate\Http\Response
-        */
-        public function show($course_id)
-        {
-        $user = User::findOrFail($course_id);
-        return $this->successResponse($user);
-        // return User::where('course_id','like','%'.$course_id.'%')->get();
-        // old code
-        /*
-        $user = User::where('userid', $id)->first();
-        if($user){
-        return $this->successResponse($user);
-        }
-        {
-        return $this->errorResponse('User ID Does Not Exists',
-        Response::HTTP_NOT_FOUND);
-        }
-        */
-        }
-        /**
-        * Update an existing author
-        * @return Illuminate\Http\Response
-        */
-        public function update(Request $request,$course_id)
-        {
-        $rules = [
-            'course_name' => 'required|max:100',
-            'course_description' => 'required|max:500'
-        ];
-        $this->validate($request, $rules);
-        $user = User::findOrFail($course_id);
-        $user->fill($request->all());
         
-        // if no changes happen
-        if ($user->isClean()) {
-        return $this->errorResponse('At least one value must
-        change', Response::HTTP_UNPROCESSABLE_ENTITY);
+    public function show($course_id){
+        return $this->successResponse($this->user2Service->obtainUser2($course_id));
         }
-        $user->save();
-        return $this->successResponse($user);
-        // old code
-        /*
-        $this->validate($request, $rules);
-        //$user = User::findOrFail($id);
-        $user = User::where('userid', $id)->first();
-        if($user){
-        $user->fill($request->all());
-        // if no changes happen
-        if ($user->isClean()) {
-        return $this->errorResponse('At least one value must
-        change', Response::HTTP_UNPROCESSABLE_ENTITY);
-        }
-        $user->save();
-        return $this->successResponse($user);
-        }
-        {
-        return $this->errorResponse('User ID Does Not Exists',
-        Response::HTTP_NOT_FOUND);
-        }
-        */
-        }
-        /**
-        * Remove an existing user
-        * @return Illuminate\Http\Response
-        */
-        public function delete($course_id)
-        {
-        $user = User::findOrFail($course_id);
-        $user->delete();
         
-        return $this->successResponse($user);
-        // old code
-        /*
-        $user = User::where('userid', $id)->first();
-        if($user){
-        $user->delete();
-        return $this->successResponse($user);
+    public function update(Request $request,$course_id){
+        return $this->successResponse($this->user2Service->editUser2($request->all(),$course_id));
         }
-        {
-        return $this->errorResponse('User ID Does Not Exists',
-        Response::HTTP_NOT_FOUND);
-        }
-        */
+    public function delete($course_id){
+        return $this->successResponse($this->user2Service->deleteUser2($course_id));
         }
 }
