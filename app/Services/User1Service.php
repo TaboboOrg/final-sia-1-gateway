@@ -8,10 +8,12 @@ class User1Service{
     * @var string
     */
     public $baseUri;
+    public $secret;
 
     public function __construct()
     {
         $this->baseUri =config('services.users1.base_uri');
+        $this->secret =config('services.users1.secret');
     }
     public function obtainUsers1(){
         return $this->performRequest('GET','/courses'); //<—this code will call the GET localhost:8000/users (our site1)

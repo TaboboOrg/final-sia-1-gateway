@@ -16,6 +16,19 @@
 $router->get('/', function () use ($router) {
     return $router->app->version();
 });
+
+Route::group([
+
+    'prefix' => 'api'
+
+], function ($router) {
+    Route::post('login', 'AuthController@login');
+    Route::post('logout', 'AuthController@logout');
+    Route::post('refresh', 'AuthController@refresh');
+    Route::post('user-profile', 'AuthController@me');
+
+});
+
 $router->get('/courses1','User1Controller@index');
 $router->post('/courses1', 'User1Controller@add');
 $router->get('/courses1/{course_id}', 'User1Controller@show'); // get user by id
