@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use  App\Models\User;
+use App\Models\User;
 
 class AuthController extends Controller
 {
@@ -14,6 +14,7 @@ class AuthController extends Controller
     {
         $this->middleware('auth:api', ['except' => ['login', 'refresh', 'logout']]);
     }
+
     /**
      * Get a JWT via given credentials.
      *
