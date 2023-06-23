@@ -5,39 +5,37 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Response;
 use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
-use App\Services\User2Service;
-use App\Models\User;
+use App\Services\User1Service;
+use App\Models\Usersubject;
 
 Class User2Controller extends Controller {
     use ApiResponser;
-    public $user2Service;
+    public $user1Service;
 
-    public function __construct(User2Service $user2Service){
-        $this->user2Service = $user2Service;
+    public function __construct(User1Service $user1Service){
+        $this->user1Service = $user1Service;
         $this->middleware('auth:api', ['except' => ['login', 'refresh', 'logout']]);
     }
-
+    
     public function index(){
-        return $this->successResponse($this->user2Service->obtainUsers2());
-        return $this->respondWithToken($token);
+        return $this->successResponse($this->user1Service->obtainUsers2());
+        
     }
     
     public function add(Request $request){
-        return $this->successResponse($this->user2Service->createUser2($request->all(),Response::HTTP_CREATED));
-        return $this->respondWithToken($token);
+        return $this->successResponse($this->user1Service->createUser2($request->all(),Response::HTTP_CREATED));
+    
         }
         
-    public function show($course_id){
-        return $this->successResponse($this->user2Service->obtainUser2($course_id));
-        return $this->respondWithToken($token);
+    public function show($authorid){
+        return $this->successResponse($this->user1Service->obtainUser2($authorid));
+    
         }
         
-    public function update(Request $request,$course_id){
-        return $this->successResponse($this->user2Service->editUser2($request->all(),$course_id));
-        return $this->respondWithToken($token);
+    public function update(Request $request,$authorid){
+        return $this->successResponse($this->user1Service->editUser2($request->all(),$authorid));
         }
-    public function delete($course_id){
-        return $this->successResponse($this->user2Service->deleteUser2($course_id));
-        return $this->respondWithToken($token);
+    public function delete($authorid){
+        return $this->successResponse($this->user1Service->deleteUser2($authorid));
         }
 }

@@ -27,15 +27,17 @@ Class User1Controller extends Controller {
     
         }
         
-    public function show($course_id){
-        return $this->successResponse($this->user1Service->obtainUser1($course_id));
+    public function show($bookid){
+        return $this->successResponse($this->user1Service->obtainUser1($bookid));
     
         }
         
-    public function update(Request $request,$course_id){
-        return $this->successResponse($this->user1Service->editUser1($request->all(),$course_id));
+    public function update(Request $request,$bookid){
+        return $this->successResponse($this->user1Service->editUser1($request->all(),$bookid));
         }
-    public function delete($course_id){
-        return $this->successResponse($this->user1Service->deleteUser1($course_id));
+    public function delete($bookid){
+        return $this->successResponse($this->user1Service->deleteUser1($bookid));
         }
+
+        
 }
